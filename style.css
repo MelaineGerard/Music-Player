@@ -56,10 +56,12 @@ body {
 
 h1 {
   font-size: 2rem;
+  color: #fff;
 }
 
 h2 {
   font-size: 1.5rem;
+  color: #fff;
 }
 
 .button-group {
@@ -72,11 +74,12 @@ h2 {
 .button-group div {
   transition: 0.1s ease-in-out;
   transform: scale(1.5);
+  color: #fff;
 }
 
 .button-group div:hover {
   cursor: pointer;
-  color: #0076eb;
+  color: #89c4ff;
   transform: scale(1.9);
 }
 
@@ -92,11 +95,12 @@ h2 {
 .progress-overlay {
   width: 0%;
   height: 100%;
-  background: #006dd9;
+  background: #89c4ff;
   border-radius: 10px;
   transition: 0.2s ease-in-out;
 }
 
 .timer {
   display: flex;
+  color: #fff;
 }
