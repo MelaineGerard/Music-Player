@@ -1,0 +1,27 @@
+version: '3.6'
+
+services:
+  musicplayer:
+    image: caddy:alpine
+    restart: always
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+      - ./dist:/usr/share/caddy
+    labels:
+      - traefik.http.routers.music-player.rule=Host(`music.melaine-gerard.fr`)
+      - traefik.http.routers.music-player.tls=true
+      - traefik.http.routers.music-player.tls.certresolver=lets-encrypt
+      - traefik.port=80
+      - traefik.enable=true
+    networks:
+      - local
+
+networks:
+  local:
+    name: local
+    external: true
+volumes:
+  caddy_data:
+    external: true
+  caddy_config:
