@@ -1,0 +1,22 @@
+{
+    "files": [
+        {
+          "name": "Vacs In The Morning",
+          "artist": "Martijn Schmit",
+          "cover": "/images/1.jpg",
+          "file": "/musics/1.mp3"
+        },
+        {
+          "name": "Running",
+          "artist": "Jens East (ft Elske)",
+          "cover": "/images/2.jpg",
+          "file": "/musics/2.mp3"
+        },
+        {
+          "name": "Journey",
+          "artist": "Esteban Orlando",
+          "cover": "/images/3.jpg",
+          "file": "/musics/3.mp3"
+        }
+      ]
+}

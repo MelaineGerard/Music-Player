@@ -1,13 +1,21 @@
 import './style.css'
 
+// Import the database from the database.json file in the browser
+const response = await fetch('database.json')
+const database = await response.json()
+
+
+// retrieve the data from the database.json
+const files = database.files
+
 const previous = document.querySelector('.previous')
 const next = document.querySelector('.next')
-let currentFile = 1;
+let currentFile = 0;
 
 
 const timer = document.querySelector('.timer')
 
-let fileName = `/musics/${currentFile}.mp3`;
+let fileName = files[currentFile].file
 
 // Add an hidden audio element
 const audio = document.createElement('audio')
@@ -17,6 +25,7 @@ audio.src = fileName
 
 // Set the audio volume
 audio.volume = 0.4
+updateData();
 
 const total = timer.querySelector('.total')
 
@@ -52,28 +61,28 @@ document.querySelector('.play').addEventListener('click', () => {
 });
 
 next.addEventListener('click', () => {
-  if (currentFile < 3) {
+  if (currentFile < files.length - 1) {
     currentFile++
-    audio.src = `/musics/${currentFile}.mp3`
+    audio.src = files[currentFile].file
     audio.play()
     updateData();
   } else {
-    currentFile = 1
-    audio.src = `/musics/${currentFile}.mp3`
+    currentFile = 0
+    audio.src = files[currentFile].file
     audio.play()
     updateData();
   }
 });
 
 previous.addEventListener('click', () => {
-  if (currentFile > 1) {
+  if (currentFile > 0) {
     currentFile--
-    audio.src = `/musics/${currentFile}.mp3`
+    audio.src = files[currentFile].file
     audio.play()
     updateData();
   } else {
-    currentFile = 3
-    audio.src = `/musics/${currentFile}.mp3`
+    currentFile = files.length - 1
+    audio.src = files[currentFile].file
     audio.play()
     updateData();
   }
@@ -84,26 +93,27 @@ function updateData() {
   const h2 = document.querySelector('h2')
   const img = document.querySelector('img')
 
-  switch (currentFile) {
-    case 1:
-      h1.innerHTML = 'Vacs In The Morning'
-      h2.innerHTML = 'Martijn Schmit'
-      img.src = '/images/1.jpg'
-      break;
-    case 2:
-      h1.innerHTML = 'Running'
-      h2.innerHTML = 'Jens East (ft Elske)'
-      img.src = '/images/2.jpg'
-      break;
-    case 3:
-      h1.innerHTML = 'Journey'
-      h2.innerHTML = 'Esteban Orlando'
-      img.src = '/images/3.jpg'
-      break;
-    default:
-      h1.innerHTML = 'Aucune musique'
-      h2.innerHTML = ''
-      break;
+  h1.innerHTML = files[currentFile].name
+  h2.innerHTML = files[currentFile].artist
+  img.src = files[currentFile].cover
+
+  if (audio.paused) {
+    document.querySelector('.play').innerHTML = `<i class="fa-solid fa-play"></i>`
+  } else {
+    document.querySelector('.play').innerHTML = `<i class="fa-solid fa-pause"></i>`
   }
-  document.querySelector('.play').innerHTML = `<i class="fa-solid fa-pause"></i>`
 }
+
+audio.addEventListener('ended', () => {
+  if (currentFile < files.length) {
+    currentFile++
+    audio.src = files[currentFile].file
+    audio.play()
+    updateData();
+  } else {
+    currentFile = 1
+    audio.src = files[currentFile].file
+    audio.play()
+    updateData();
+  }
+})
